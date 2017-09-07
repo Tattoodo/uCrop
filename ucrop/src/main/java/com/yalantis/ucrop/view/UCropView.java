@@ -30,9 +30,12 @@ public class UCropView extends FrameLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ucrop_UCropView);
         mViewOverlay.processStyledAttributes(a);
+        mViewOverlay.setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(),
+                getPaddingBottom());
         mGestureCropImageView.processStyledAttributes(a);
         a.recycle();
 
+        setPadding(0, 0, 0, 0);
 
         mGestureCropImageView.setCropBoundsChangeListener(new CropBoundsChangeListener() {
             @Override
