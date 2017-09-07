@@ -2,6 +2,7 @@ package com.yalantis.ucrop.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -63,7 +64,8 @@ public class CropImageView extends TransformImageView {
      * Returns the current {@link ImageState} used to crop the image.
      */
     public ImageState getImageState() {
-        return new ImageState(getViewBitmap(),
+        Bitmap bitmap = getViewBitmap();
+        return new ImageState(bitmap.copy(bitmap.getConfig(), false),
                 mCropRect, RectUtils.trapToRect(mCurrentImageCorners),
                 getCurrentScale(), getCurrentAngle());
     }
