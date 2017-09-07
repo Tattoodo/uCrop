@@ -286,6 +286,23 @@ public class CropImageView extends TransformImageView {
             }
         }
     }
+    
+    public void resetScale() {
+        mCurrentImageMatrix.setScale(1, 1);
+        dispatchImageMatrixUpdate();
+    }
+
+    public void resetRotation() {
+        mCurrentImageMatrix.setRotate(0);
+        dispatchImageMatrixUpdate();
+    }
+
+    private void dispatchImageMatrixUpdate() {
+        setImageMatrix(mCurrentImageMatrix);
+        if (mTransformImageListener != null) {
+            mTransformImageListener.onScale(getMatrixScale(mCurrentImageMatrix));
+        }
+    }
 
     /**
      * First, un-rotate image and crop rectangles (make image rectangle axis-aligned).
