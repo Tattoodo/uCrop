@@ -2,7 +2,6 @@ package com.yalantis.ucrop.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -12,11 +11,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.yalantis.ucrop.R;
-import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.callback.CropBoundsChangeListener;
-import com.yalantis.ucrop.model.CropParameters;
 import com.yalantis.ucrop.model.ImageState;
-import com.yalantis.ucrop.task.BitmapCropTask;
 import com.yalantis.ucrop.util.CubicEasing;
 import com.yalantis.ucrop.util.RectUtils;
 
@@ -49,7 +45,6 @@ public class CropImageView extends TransformImageView {
     private Runnable mWrapCropBoundsRunnable, mZoomImageToPositionRunnable = null;
 
     private float mMaxScale, mMinScale;
-    private int mMaxResultImageSizeX = 0, mMaxResultImageSizeY = 0;
     private long mImageToWrapCropBoundsAnimDuration = DEFAULT_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION;
 
     public CropImageView(Context context) {
@@ -65,24 +60,12 @@ public class CropImageView extends TransformImageView {
     }
 
     /**
-     * Cancels all current animations and sets image to fill crop area (without animation).
-     * Then creates and executes {@link BitmapCropTask} with proper parameters.
+     * Returns the current {@link ImageState} used to crop the image.
      */
-    public void cropAndSaveImage(@NonNull Bitmap.CompressFormat compressFormat, int compressQuality,
-                                 @Nullable BitmapCropCallback cropCallback) {
-        cancelAllAnimations();
-        setImageToWrapCropBounds(false);
-
-        final ImageState imageState = new ImageState(
+    public ImageState getImageState() {
+        return new ImageState(getViewBitmap(),
                 mCropRect, RectUtils.trapToRect(mCurrentImageCorners),
                 getCurrentScale(), getCurrentAngle());
-
-        final CropParameters cropParameters = new CropParameters(
-                mMaxResultImageSizeX, mMaxResultImageSizeY,
-                compressFormat, compressQuality,
-                getImageInputPath(), getImageOutputPath(), getExifInfo());
-
-        new BitmapCropTask(getContext(), getViewBitmap(), imageState, cropParameters, cropCallback).execute();
     }
 
     /**
@@ -152,24 +135,6 @@ public class CropImageView extends TransformImageView {
 
     public void setCropBoundsChangeListener(@Nullable CropBoundsChangeListener cropBoundsChangeListener) {
         mCropBoundsChangeListener = cropBoundsChangeListener;
-    }
-
-    /**
-     * This method sets maximum width for resulting cropped image
-     *
-     * @param maxResultImageSizeX - size in pixels
-     */
-    public void setMaxResultImageSizeX(@IntRange(from = 10) int maxResultImageSizeX) {
-        mMaxResultImageSizeX = maxResultImageSizeX;
-    }
-
-    /**
-     * This method sets maximum width for resulting cropped image
-     *
-     * @param maxResultImageSizeY - size in pixels
-     */
-    public void setMaxResultImageSizeY(@IntRange(from = 10) int maxResultImageSizeY) {
-        mMaxResultImageSizeY = maxResultImageSizeY;
     }
 
     /**
