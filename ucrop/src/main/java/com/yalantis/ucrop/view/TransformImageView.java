@@ -114,6 +114,7 @@ public class TransformImageView extends ImageView {
 
     @Override
     public void setImageBitmap(final Bitmap bitmap) {
+        mBitmapDecoded = bitmap != null;
         setImageDrawable(new FastBitmapDrawable(bitmap));
     }
 
@@ -147,7 +148,6 @@ public class TransformImageView extends ImageView {
                         mImageOutputPath = imageOutputPath;
                         mExifInfo = exifInfo;
 
-                        mBitmapDecoded = true;
                         setImageBitmap(bitmap);
                     }
 
