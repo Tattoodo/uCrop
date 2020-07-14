@@ -326,9 +326,6 @@ public class CropImageView extends TransformImageView {
     private float[] calculateImageIndents() {
         mTempMatrix.reset();
         mTempMatrix.setRotate(-getCurrentAngle());
-        if (mIsFlipped) {
-            mTempMatrix.preScale(-1, 1, mCurrentImageCenter[0], mCurrentImageCenter[1]);
-        }
 
         float[] unrotatedImageCorners = Arrays.copyOf(mCurrentImageCorners, mCurrentImageCorners.length);
         float[] unrotatedCropBoundsCorners = RectUtils.getCornersFromRect(mCropRect);
