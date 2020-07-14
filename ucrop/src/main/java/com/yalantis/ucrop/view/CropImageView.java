@@ -300,10 +300,11 @@ public class CropImageView extends TransformImageView {
     }
     
     public void flipImage() {
+       
         if (!mIsFlipped) {
-            mCurrentImageMatrix.preScale(-1, 1);
+            mCurrentImageMatrix.preScale(-1, 1, mCropRect.centerX(), mCropRect.centerY());
         } else {
-            mCurrentImageMatrix.preScale(1, -1);
+            mCurrentImageMatrix.preScale(1, -1,  mCropRect.centerX(), mCropRect.centerY());
         }
         mIsFlipped = !mIsFlipped;
         dispatchImageMatrixUpdate();
