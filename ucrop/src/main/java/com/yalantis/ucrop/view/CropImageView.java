@@ -47,6 +47,8 @@ public class CropImageView extends TransformImageView {
 
     private float mMaxScale, mMinScale;
     private long mImageToWrapCropBoundsAnimDuration = DEFAULT_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION;
+    
+    private boolean mIsFlipped = false;
 
     public CropImageView(Context context) {
         this(context, null);
@@ -294,6 +296,16 @@ public class CropImageView extends TransformImageView {
 
     public void resetRotation() {
         mCurrentImageMatrix.setRotate(0);
+        dispatchImageMatrixUpdate();
+    }
+    
+    public void flipImage() {
+        if (!mIsFlipped) {
+            mCurrentImageMatrix.preScale(-1, 1);
+        } else {
+            mCurrentImageMatrix.preScale(1, -1);
+        }
+        mIsFlipped = !mIsFlipped;
         dispatchImageMatrixUpdate();
     }
 
