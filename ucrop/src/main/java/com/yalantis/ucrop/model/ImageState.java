@@ -11,15 +11,17 @@ public class ImageState {
     private Bitmap mBitmap;
     private RectF mCropRect;
     private RectF mCurrentImageRect;
+    private boolean mFlipped;
 
     private float mCurrentScale, mCurrentAngle;
 
-    public ImageState(Bitmap bitmap, RectF cropRect, RectF currentImageRect, float currentScale, float currentAngle) {
+    public ImageState(Bitmap bitmap, RectF cropRect, RectF currentImageRect, float currentScale, float currentAngle, boolean flipped) {
         mBitmap = bitmap;
         mCropRect = cropRect;
         mCurrentImageRect = currentImageRect;
         mCurrentScale = currentScale;
         mCurrentAngle = currentAngle;
+        mFlipped = flipped;
     }
 
     public Bitmap getBitmap() {
@@ -40,5 +42,9 @@ public class ImageState {
 
     public float getCurrentAngle() {
         return mCurrentAngle;
+    }
+
+    public boolean getFlipped() {
+        return mFlipped;
     }
 }

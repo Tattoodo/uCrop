@@ -69,7 +69,7 @@ public class CropImageView extends TransformImageView {
         Bitmap bitmap = getViewBitmap();
         return new ImageState(bitmap.copy(bitmap.getConfig(), false),
                 mCropRect, RectUtils.trapToRect(mCurrentImageCorners),
-                getCurrentScale(), getCurrentAngle());
+                getCurrentScale(), getCurrentAngle(), mIsFlipped);
     }
 
     /**
@@ -304,7 +304,7 @@ public class CropImageView extends TransformImageView {
         if (!mIsFlipped) {
             mCurrentImageMatrix.preScale(-1, 1, mCropRect.centerX(), mCropRect.centerY());
         } else {
-            mCurrentImageMatrix.preScale(1, -1,  mCropRect.centerX(), mCropRect.centerY());
+            mCurrentImageMatrix.preScale(1, 1,  mCropRect.centerX(), mCropRect.centerY());
         }
         mIsFlipped = !mIsFlipped;
         dispatchImageMatrixUpdate();
