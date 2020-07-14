@@ -253,9 +253,6 @@ public class CropImageView extends TransformImageView {
 
             mTempMatrix.reset();
             mTempMatrix.setTranslate(deltaX, deltaY);
-            if (mIsFlipped) {
-                mTempMatrix.preScale(-1, 1, mCurrentImageCenter[0], mCurrentImageCenter[1]);
-            }
 
             final float[] tempCurrentImageCorners = Arrays.copyOf(mCurrentImageCorners, mCurrentImageCorners.length);
             mTempMatrix.mapPoints(tempCurrentImageCorners);
